@@ -1,0 +1,1180 @@
+openapi: 3.0.1
+info:
+  title: Project Seeker API
+  description: Project Seeker API
+  contact:
+    name: Jorge Martín Llorente
+    email: jorgetargz@gmail.com
+  version: "1.0"
+externalDocs:
+  description: Checkout the GitHub Repository for more information about Project Seeker
+    TFG Project
+  url: https://github.com/jorgetargz/ProjectSeeker-TFG
+servers:
+- url: https://project-seeker.duckdns.org:8090
+  description: Duckdns Dynamic DNS
+tags:
+- name: Users Endpoints
+  description: Manage users
+- name: Projects Endpoints
+  description: Manage projects and offers
+- name: Session Endpoints
+  description: Manage session
+- name: Super Admin Endpoints
+  description: Project Seeker Administration
+paths:
+  /api/secured/users/modifyFreelancerProfile:
+    put:
+      tags:
+      - Users Endpoints
+      summary: Modify freelancer profile
+      operationId: modify_freelancer_profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyFreelancerProfileDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/users/modifyClientProfile:
+    put:
+      tags:
+      - Users Endpoints
+      summary: Modify client profile
+      operationId: modify_client_profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyClientProfileDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/users/changeRole:
+    put:
+      tags:
+      - Users Endpoints
+      summary: Change user role
+      operationId: change_role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeUserRoleDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/super/enable-user:
+    put:
+      tags:
+      - Super Admin Endpoints
+      summary: Enable user
+      operationId: enable_user
+      parameters:
+      - name: email
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.super_admin_endpoints_controller
+  /api/secured/super/disable-user:
+    put:
+      tags:
+      - Super Admin Endpoints
+      summary: Disable user
+      operationId: disable_user
+      parameters:
+      - name: email
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.super_admin_endpoints_controller
+  /api/session/logout:
+    post:
+      tags:
+      - Session Endpoints
+      summary: Logout user and delete session cookie
+      operationId: session_logout
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.session_endpoints_controller
+  /api/session/logout-everywhere:
+    post:
+      tags:
+      - Session Endpoints
+      summary: Logout user everywhere and delete session cookie
+      operationId: session_logout_everywhere
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.session_endpoints_controller
+  /api/session/login:
+    post:
+      tags:
+      - Session Endpoints
+      summary: Login user with firebase token and create session cookie
+      operationId: session_login
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.session_endpoints_controller
+  /api/secured/users/createUser:
+    post:
+      tags:
+      - Users Endpoints
+      summary: Create user
+      operationId: create_user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/users/addDevice:
+    post:
+      tags:
+      - Users Endpoints
+      summary: Add device for notifications
+      operationId: add_or_update_device_fcm_token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddDeviceDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/projects/openProjectsBySkills:
+    post:
+      tags:
+      - Projects Endpoints
+      summary: Get open projects by skills
+      operationId: get_open_projects_by_skills
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/freelancer/submitOffer:
+    post:
+      tags:
+      - Projects Endpoints
+      summary: Submit offer
+      operationId: submit_offer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitOfferDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectInfoDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/finishProject:
+    post:
+      tags:
+      - Projects Endpoints
+      summary: Finish project
+      operationId: finish_project
+      parameters:
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectInfoDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/createProject:
+    post:
+      tags:
+      - Projects Endpoints
+      summary: Create project
+      operationId: create_project
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectInfoDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/assignFreelancer:
+    post:
+      tags:
+      - Projects Endpoints
+      summary: Assign freelancer
+      operationId: assign_freelancer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignProjectDTO'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectInfoDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/users/profile:
+    get:
+      tags:
+      - Users Endpoints
+      summary: Get profile
+      operationId: get_profile
+      parameters:
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/users/myProfile:
+    get:
+      tags:
+      - Users Endpoints
+      summary: Get my profile
+      operationId: get_my_profile
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+  /api/secured/super/user:
+    get:
+      tags:
+      - Super Admin Endpoints
+      summary: Get user by email
+      operationId: get_user_by_email
+      parameters:
+      - name: email
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProfileDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.super_admin_endpoints_controller
+  /api/secured/projects/projectInfo:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get project info
+      operationId: get_prject_info
+      parameters:
+      - name: id
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectInfoDTO'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/openProjects:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get all open projects
+      operationId: get_open_projects
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/freelancer/getProjectsWhereIHaveOffer:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get projects where I have made an offer
+      operationId: get_projects_by_offer_freelancer
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/freelancer/getProjectsAssignedToMe:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get projects assigned to me
+      operationId: get_projects_by_assigned_freelancer
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/myProjects:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get the projects I have created
+      operationId: get_projects_by_client
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/getMyOpenProjects:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get the projects I have created that are open
+      operationId: get_open_projects_by_client
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/projects/client/getMyInProgressProjects:
+    get:
+      tags:
+      - Projects Endpoints
+      summary: Get the projects I have created that are in progress
+      operationId: get_in_progress_projects_by_client_id
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInfoDTO'
+                x-content-type: '*/*'
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.projects_endpoints_controller
+  /api/secured/users/deleteUser:
+    delete:
+      tags:
+      - Users Endpoints
+      summary: Delete user
+      operationId: delete_user
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "401":
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+        "404":
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ErrorDTO'
+      x-openapi-router-controller: swagger_server.controllers.users_endpoints_controller
+components:
+  schemas:
+    ErrorDTO:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        httpErrorCode:
+          type: integer
+          format: int32
+        firebaseError:
+          type: string
+        message:
+          type: string
+        description:
+          type: string
+    ModifyFreelancerProfileDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        availability:
+          type: string
+    ProfileDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        firebaseId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        activeRole:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        availability:
+          type: string
+        rating:
+          type: number
+          format: double
+        skills:
+          type: array
+          items:
+            type: string
+      example:
+        skills:
+        - skills
+        - skills
+        firebaseId: firebaseId
+        phone: phone
+        name: name
+        rating: 0.8008281904610115
+        description: description
+        id: id
+        availability: availability
+        title: title
+        email: email
+        activeRole: activeRole
+    ModifyClientProfileDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+    ChangeUserRoleDTO:
+      type: object
+      properties:
+        activeRole:
+          type: string
+    CreateUserDTO:
+      type: object
+      properties:
+        firebaseId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        activeRole:
+          type: string
+    AddDeviceDTO:
+      type: object
+      properties:
+        firebaseId:
+          type: string
+        deviceModel:
+          type: string
+        deviceToken:
+          type: string
+    OfferInfoDTO:
+      type: object
+      properties:
+        freelancerId:
+          type: string
+        description:
+          type: string
+        budget:
+          type: number
+          format: double
+        status:
+          type: string
+      example:
+        freelancerId: freelancerId
+        description: description
+        budget: 1.4658129805029452
+        status: status
+    ProjectInfoDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        clientId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        minBudget:
+          type: number
+          format: double
+        maxBudget:
+          type: number
+          format: double
+        startDate:
+          type: string
+          format: date
+        deadlineDate:
+          type: string
+          format: date
+        realEndDate:
+          type: string
+          format: date
+        status:
+          type: string
+        selectedFreelancerId:
+          type: string
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferInfoDTO'
+      example:
+        offers:
+        - freelancerId: freelancerId
+          description: description
+          budget: 1.4658129805029452
+          status: status
+        - freelancerId: freelancerId
+          description: description
+          budget: 1.4658129805029452
+          status: status
+        clientId: clientId
+        deadlineDate: 2000-01-23
+        description: description
+        maxBudget: 6.027456183070403
+        realEndDate: 2000-01-23
+        title: title
+        selectedFreelancerId: selectedFreelancerId
+        skills:
+        - skills
+        - skills
+        id: id
+        minBudget: 0.8008281904610115
+        startDate: 2000-01-23
+        status: status
+    SubmitOfferDTO:
+      type: object
+      properties:
+        projectId:
+          type: string
+        description:
+          type: string
+        budget:
+          type: number
+          format: double
+    CreateProjectDTO:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        minBudget:
+          type: number
+          format: double
+        maxBudget:
+          type: number
+          format: double
+        startDate:
+          type: string
+          format: date
+        deadlineDate:
+          type: string
+          format: date
+    AssignProjectDTO:
+      type: object
+      properties:
+        projectId:
+          type: string
+        freelancerId:
+          type: string
+
